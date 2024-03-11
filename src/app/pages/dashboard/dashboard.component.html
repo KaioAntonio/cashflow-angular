@@ -1,0 +1,88 @@
+<div class="container">
+  <header>
+    <div>
+      <img src="../../../assets/cashflow-icon.png" alt="Cashflow" />
+      <h1>Olá, {{ user.name }}</h1>
+    </div>
+    <div>
+      <button class="primary" (click)="createTransaction()">
+        Nova Transação
+      </button>
+      <button class="primary" (click)="logout()">Sair</button>
+    </div>
+
+  </header>
+
+  <main>
+    <section class="balances-container">
+      <div>
+        <p>Entradas</p>
+        <h2>R$ {{ userBalance.credits.toFixed(2) }}</h2>
+        <p *ngIf="lastCreditTransaction.createdAt">
+          Última entrada em {{ lastCreditTransaction.createdAt }}
+        </p>
+        <img src="../../../assets/circle-up.svg" alt="Seta pra cima" />
+      </div>
+
+      <div>
+        <p>Saída</p>
+        <h2>R$ {{ userBalance.debits.toFixed(2) }}</h2>
+        <p *ngIf="lastCreditTransaction.createdAt">
+          Última saída em {{ lastDebitTransaction.createdAt }}
+        </p>
+        <img src="../../../assets/circle-down.svg" alt="Seta pra baixo" />
+      </div>
+
+      <div style="background-color: var(--green-dark)">
+        <p>Total</p>
+        <h2>R$ {{ userBalance.balance.toFixed(2) }}</h2>
+        <p style="visibility: hidden">a</p>
+        <img src="../../../assets/dollar.svg" alt="Ícone de dólar" />
+      </div>
+    </section>
+
+    <div class="transactions-quantity">
+      <p>Transações</p>
+      <span> {{ userTransactions.totalElements }} itens</span>
+    </div>
+
+    <div class="search-bar">
+      <app-input
+        componentClass="test"
+        placeholder="Busque uma transação"
+        name="search-bar"
+        [(ngModel)]="search"
+        (keyup.enter)="filterTransactionsByName()"
+      />
+      <button (click)="filterTransactionsByName()">
+        <i class="material-icons">search</i>
+        <span>Buscar</span>
+      </button>
+    </div>
+
+    <section class="card-list">
+      <app-card-item
+        *ngFor="let transaction of userTransactions.content"
+        [amount]="transaction.amount"
+        [category]="transaction.category"
+        [description]="transaction.description"
+        [type]="transaction.type"
+        [id]="transaction.id"
+        [createdAt]="transaction.createdAt"
+      />
+    </section>
+
+    <h1
+      class="no-transactions-text"
+      *ngIf="userTransactions.totalElements == 0"
+    >
+      Você ainda não possui transações...
+    </h1>
+
+    <app-pagination
+      [totalPages]="totalPages"
+      [pageNumber]="pageNumber + 1"
+      (switchPage)="refreshTransactions($event)"
+    />
+  </main>
+</div>

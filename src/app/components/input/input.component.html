@@ -1,0 +1,12 @@
+<div>
+  <i *ngIf="icon" class="material-icons">{{ icon }}</i>
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [name]="name"
+    [id]="name"
+    autocomplete="off"
+    [required]="isRequired"
+    [(ngModel)]="value"
+  />
+</div>

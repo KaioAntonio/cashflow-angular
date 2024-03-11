@@ -1,0 +1,23 @@
+div {
+  display: flex;
+  background-color: var(--black-800);
+  border-radius: 6px;
+  padding: 16px;
+
+  gap: 12px;
+}
+
+i {
+  color: var(--black-400);
+  user-select: none;
+}
+
+input {
+  all: unset;
+  font-size: 1.6rem;
+  width: 100%;
+
+  &::placeholder {
+    color: var(--black-400);
+  }
+}
